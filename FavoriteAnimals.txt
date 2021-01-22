@@ -1,21 +1,25 @@
 Favorite Animals
 
-Michael 
-1. Hello
+Mammals 
+1. Moose - Nick
 2.
 3.
+4.
 
-Nick
-1.
+Reptiles
+1. Iguana - Nick
 2.
 3.
+4.
 
-Helder
-1.
+Fish
+1. Clown Fish - Nick
 2.
 3.
+4.
 
-Eric
-1.
+Birds
+1. Goose - Nick
 2.
 3.
+4.
