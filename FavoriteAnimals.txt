@@ -1,21 +1,25 @@
 Favorite Animals
 
-Michael 
+Mammals 
 1.
 2.
 3.
+4.
 
-Nick
+Reptiles
 1.
 2.
 3.
+4.
 
-Helder
+Fish
 1.
 2.
 3.
+4.
 
-Eric
+Birds
 1.
 2.
 3.
+4.
