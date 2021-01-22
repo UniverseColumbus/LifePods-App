@@ -1,25 +1,25 @@
 Favorite Animals
 
 Mammals 
-1.
+1. Moose
 2.
 3.
 4.
 
 Reptiles
-1.
+1. Iguana
 2.
 3.
 4.
 
 Fish
-1.
+1. Clown Fish
 2.
 3.
 4.
 
 Birds
-1.
+1. Goose
 2.
 3.
 4.
