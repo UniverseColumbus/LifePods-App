@@ -4,22 +4,22 @@ Mammals
 1. Moose - Nick
 2. Cheetah - Michael Orr
 3. Tiger - Eric
-4.
+4. Wolf - Helder
 
 Reptiles
 1. Iguana - Nick
 2. Aligator - Michael Orr
 3. Komodo Dragon - Eric
-4.
+4. Snake - Helder
 
 Fish
 1. Clown Fish - Nick
 2. Sunfish - Michael Orr
 3. Sperm Whale - Eric
-4.
+4. Tilapia - Helder
 
 Birds
 1. Goose - Nick
 2. Seagull - Michael Orr
 3. Peregrine Falcon - Eric
-4.
+4. Cockatiel - Helder
