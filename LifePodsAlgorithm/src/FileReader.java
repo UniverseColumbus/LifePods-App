@@ -28,14 +28,17 @@ public class FileReader {
 					int id = Integer.parseInt(rowScanner.next());
 					String postGradPlans = rowScanner.next();
 					String willingPodLeader = rowScanner.next();
-					int pref1 = Integer.parseInt(rowScanner.next());
-					int pref2 = Integer.parseInt(rowScanner.next());
-					int antPref1 = Integer.parseInt(rowScanner.next());
-					int antPref2 = Integer.parseInt(rowScanner.next());
-					int antPref3 = Integer.parseInt(rowScanner.next());
-					int antPref4 = Integer.parseInt(rowScanner.next());
+					int preferenceList [] = new int [2];
+					preferenceList[0] = Integer.parseInt(rowScanner.next());
+					preferenceList[1] = Integer.parseInt(rowScanner.next());
 					
-					users.add(new User(id, postGradPlans, willingPodLeader, pref1, pref2, antPref1, antPref2, antPref3, antPref4));
+					int antiPreferenceList [] = new int [4];
+					antiPreferenceList[0] = Integer.parseInt(rowScanner.next());
+					antiPreferenceList[1] = Integer.parseInt(rowScanner.next());
+					antiPreferenceList[2] = Integer.parseInt(rowScanner.next());
+					antiPreferenceList[3] = Integer.parseInt(rowScanner.next());
+					
+					users.add(new User(id, postGradPlans, willingPodLeader, preferenceList, antiPreferenceList));
 				}				
 			}
 		} catch (FileNotFoundException e) {
