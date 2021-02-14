@@ -29,6 +29,7 @@ public class GroupBuilder {
 			}
 		}
 		
+		// Add users with no preference and anti-preference randomly into groups
 		for (User u : users) {
 			if (u.hasGroup()) continue;
 			boolean noPref = true;
