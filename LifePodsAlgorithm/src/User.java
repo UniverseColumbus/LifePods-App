@@ -6,6 +6,7 @@ public class User {
 	private String willingPodLeader;
 	private int preferenceList [];
 	private int antiPreferenceList [];
+	private boolean hasGroup;
 
 	public User(int id, String postGradPlans, String willingPodLeader, int[] preferenceList, int[] antiPreferenceList) {
 		super();
@@ -14,6 +15,7 @@ public class User {
 		this.willingPodLeader = willingPodLeader;
 		this.preferenceList = preferenceList;
 		this.antiPreferenceList = antiPreferenceList;
+		this.hasGroup = false;
 	}
 
 	public int getId() {
@@ -54,6 +56,14 @@ public class User {
 
 	public void setAntiPreferenceList(int[] antiPreferenceList) {
 		this.antiPreferenceList = antiPreferenceList;
+	}
+
+	public boolean hasGroup() {
+		return hasGroup;
+	}
+
+	public void setHasGroup(boolean hasGroup) {
+		this.hasGroup = hasGroup;
 	}
 
 	@Override

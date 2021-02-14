@@ -35,6 +35,7 @@ public class LifePod {
 	
 	public void addUser(User user) {
 		pod.add(user);
+		user.setHasGroup(true);
 	}
 	
 	public void addLeader(User user) {

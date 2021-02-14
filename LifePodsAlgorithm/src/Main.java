@@ -11,8 +11,13 @@ public class Main {
 		users = FileReader.readFile(file);		
 		
 		//prints all the users
-		for (User u : users) {
+		/*for (User u : users) {
 			System.out.println(u.toString());
+		}*/
+		
+		ArrayList<LifePod> pods = GroupBuilder.buildPods(users);
+		for (LifePod p : pods) {
+			System.out.println(p.toString());
 		}
 	}
 
