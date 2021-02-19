@@ -24,16 +24,8 @@ public class Main{
     }
     System.out.println("Changed MO-1 Branch");
     
-   
-    
-    
-<<<<<<< Updated upstream
-=======
     ExcelWriter ew = new ExcelWriter(pods);
     ew.write(); 
-//    Writer w = new Writer(pods);
-//    w.write();
->>>>>>> Stashed changes
   }
 
 }
