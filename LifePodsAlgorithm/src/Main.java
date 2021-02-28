@@ -19,10 +19,11 @@ public class Main{
     
     GroupBuilder gb = new GroupBuilder(users);
     ArrayList<LifePod> pods = gb.buildPods();
+    int counter = 1;
     for (LifePod p : pods) {
-      System.out.println(p.toString());
+      System.out.println(counter + " " + p.toString());
+      counter++;
     }
-    System.out.println("Changed MO-1 Branch");
     
     ExcelWriter ew = new ExcelWriter(pods);
     ew.write(); 

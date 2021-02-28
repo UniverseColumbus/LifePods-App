@@ -26,19 +26,19 @@ public class FileReader {
 				try (Scanner rowScanner = new Scanner(row)) {
 					rowScanner.useDelimiter(",");
 					int id = Integer.parseInt(rowScanner.next());
-					String postGradPlans = rowScanner.next();
-					String willingPodLeader = rowScanner.next();
-					int preferenceList [] = new int [2];
-					preferenceList[0] = Integer.parseInt(rowScanner.next());
-					preferenceList[1] = Integer.parseInt(rowScanner.next());
+					String plans = rowScanner.next();
+					String willLead = rowScanner.next();
+					int friends [] = new int [2];
+					friends[0] = Integer.parseInt(rowScanner.next());
+					friends[1] = Integer.parseInt(rowScanner.next());
 					
-					int antiPreferenceList [] = new int [4];
-					antiPreferenceList[0] = Integer.parseInt(rowScanner.next());
-					antiPreferenceList[1] = Integer.parseInt(rowScanner.next());
-					antiPreferenceList[2] = Integer.parseInt(rowScanner.next());
-					antiPreferenceList[3] = Integer.parseInt(rowScanner.next());
+					int enemies [] = new int [4];
+					enemies[0] = Integer.parseInt(rowScanner.next());
+					enemies[1] = Integer.parseInt(rowScanner.next());
+					enemies[2] = Integer.parseInt(rowScanner.next());
+					enemies[3] = Integer.parseInt(rowScanner.next());
 					
-					users.add(new User(id, postGradPlans, willingPodLeader, preferenceList, antiPreferenceList));
+					users.add(new User(id, plans, willLead, friends, enemies));
 				}				
 			}
 		} catch (FileNotFoundException e) {
