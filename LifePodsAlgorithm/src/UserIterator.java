@@ -3,17 +3,26 @@ import java.util.*;
 public class UserIterator {
  
   private int index;
-  private LinkedList<User> users;
+  private List<User> users;
   
-  public UserIterator(LinkedList<User> users) {
+  
+  public UserIterator(List<User> users) {
     index = 0;
     this.users = users;
+  }
+  
+  public UserIterator(String choice) {
+    if (choice.equals("linkedlist")) users = new LinkedList<User>();
+    else if (choice.equals("arraylist")) users = new ArrayList<User>();
+    else users = new LinkedList<User>();
   }
   
   public UserIterator() {
     users = new LinkedList<User>();
   }
-
+  
+  
+  
   public boolean hasNext() {
     boolean hasNext = false;
     int totalUsers = users.size();
