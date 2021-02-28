@@ -39,7 +39,7 @@ public class ExcelWriter {
         for (User member : members) {
           writer.append(String.valueOf(member.getId()));
           writer.append(",");
-          writer.append(member.getPostGradPlans());
+          writer.append(member.getPlans());
           writer.append(",");
           if (member.isLeader()) writer.append("Pod Leader");
           writer.append("\n");

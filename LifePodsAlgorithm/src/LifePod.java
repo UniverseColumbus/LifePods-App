@@ -2,19 +2,22 @@ import java.util.ArrayList;
 
 public class LifePod {  
   private ArrayList<User> members;
-  private int leader;
+  private User leader;
   private double score;
   private String podType = "undecided";
+  public int size;
   
   //constructor
   public LifePod() {
     members = new ArrayList<>();
+    size = 0;
   }
   
   //pod
   public void addUser(User user) {
     members.add(user);
     user.setHasGroup(true);
+    size++;
   }
 
   public ArrayList<User> getMembers() {
@@ -27,17 +30,15 @@ public class LifePod {
   
   //leader
   public void addLeader(User user) {
-    this.leader = user.getId();
+    members.add(user);
+    this.leader = user;
     user.makeLeader();
   }
 
-  public int getLeader() {
+  public User getLeader() {
     return leader;
   }
 
-  public void setLeader(int leader) {
-    this.leader = leader;
-  }
 
   //score
   public double getScore() {

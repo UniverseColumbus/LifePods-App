@@ -1,6 +1,7 @@
 import java.util.*;
+import java.io.*;
 
-public class Main {
+public class Main{
 
   public static void main(String[] args) {
     // file path
@@ -18,12 +19,14 @@ public class Main {
     
     GroupBuilder gb = new GroupBuilder(users);
     ArrayList<LifePod> pods = gb.buildPods();
+    int counter = 1;
     for (LifePod p : pods) {
-      System.out.println(p.toString());
+      System.out.println(counter + " " + p.toString());
+      counter++;
     }
     
     ExcelWriter ew = new ExcelWriter(pods);
-    ew.write();
+    ew.write(); 
   }
 
 }

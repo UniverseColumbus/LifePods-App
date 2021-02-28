@@ -2,25 +2,25 @@ import java.util.Arrays;
 
 public class User { 
   private int id;
-  private String postGradPlans;
-  private String willingPodLeader;
-  private int preferenceList [];
-  private int antiPreferenceList [];
+  private String plans;
+  private String willLead;
+  private int friends [];
+  private int enemies [];
   private boolean hasGroup;
   private boolean isLeader = false;
 
-  public User(int id, String postGradPlans, String willingPodLeader, int[] preferenceList, int[] antiPreferenceList) {
+  public User(int id, String plans, String willLead, int[] friends, int[] enemies) {
     super();
     this.id = id;
-    this.postGradPlans = postGradPlans;
-    this.willingPodLeader = willingPodLeader;
-    this.preferenceList = preferenceList;
-    this.antiPreferenceList = antiPreferenceList;
+    this.plans = plans;
+    this.willLead = willLead;
+    this.friends = friends;
+    this.enemies = enemies;
     this.hasGroup = false;
   }
   
   //id
-  public int getId() {
+  public int getId() { 
     return id;
   }
 
@@ -29,21 +29,21 @@ public class User {
   }
   
   //post-grad plans
-  public String getPostGradPlans() {
-    return postGradPlans;
+  public String getPlans() {
+    return plans;
   }
 
-  public void setPostGradPlans(String postGradPlans) {
-    this.postGradPlans = postGradPlans;
+  public void setPlans(String plans) {
+    this.plans = plans;
   }
 
   //pod leader
-  public String getWillingPodLeader() {
-    return willingPodLeader;
+  public String getWillLead() {
+    return willLead;
   }
 
-  public void setWillingPodLeader(String willingPodLeader) {
-    this.willingPodLeader = willingPodLeader;
+  public void setWillLead(String willLead) {
+    this.willLead = willLead;
   }
   
   public boolean isLeader() {
@@ -55,20 +55,20 @@ public class User {
   }
   
   //preference list
-  public int[] getPreferenceList() {
-    return preferenceList;
+  public int[] getFriends() {
+    return friends;
   }
 
-  public void setPreferenceList(int[] preferenceList) {
-    this.preferenceList = preferenceList;
+  public void setFriends(int[] friends) {
+    this.friends = friends;
   }
 
-  public int[] getAntiPreferenceList() {
-    return antiPreferenceList;
+  public int[] getEnemies() {
+    return enemies;
   }
 
-  public void setAntiPreferenceList(int[] antiPreferenceList) {
-    this.antiPreferenceList = antiPreferenceList;
+  public void setEnemies(int[] enemies) {
+    this.enemies = enemies;
   }
 
   //has group
@@ -82,9 +82,24 @@ public class User {
 
   @Override
   public String toString() {
-    return "User [id=" + id + ", postGradPlans=" + postGradPlans + ", willingPodLeader=" + willingPodLeader
-        + ", preferenceList=" + Arrays.toString(preferenceList) + ", antiPreferenceList="
-        + Arrays.toString(antiPreferenceList) + "]";
+    String pCopy = "";
+    if(plans.equals("work")) pCopy = plans + "            ";
+    else if(plans.equals("undecided")) pCopy = plans + "       ";
+    else if(plans.equals("grad school")) pCopy = plans + "     ";
+    else pCopy = plans;
+    
+    String wlCopy = "";
+    if(willLead.equals("yes")) wlCopy = willLead + "  ";
+    else if (willLead.equals("no")) wlCopy = willLead + "   ";
+    else wlCopy = willLead;
+    
+    String idCopy = "";
+    if(id%10 == id) idCopy = "0" + String.valueOf(id);
+    else idCopy = String.valueOf(id);
+    
+    return "User {  id= [" + idCopy + "],  plans= [" + pCopy + "],  willLead= [" + wlCopy
+        + "],  friends= " + Arrays.toString(friends) + ",  enemies= "
+        + Arrays.toString(enemies) + "  }";
   }
 }
 
