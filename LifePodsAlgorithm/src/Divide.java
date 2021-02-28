@@ -37,7 +37,6 @@ public class Divide {
    */
   public void segregate(ArrayList<User> users) {
     
-    int reqGL = 0, reqWL = 0;
     int gradSize = 0, workSize = 0;
     
     for (User u : users) { 
@@ -46,85 +45,62 @@ public class Divide {
       
       if (plans.equals("undecided")) undList.add(u);
       
-      
       else if (plans.equals("grad school")) {
-        if (gradSize%5 == 0) reqGL++; 
-        gradSize++;
+        if (willLead.equals("yes")) gradPool.get(1).add(u);
+        else if (willLead.equals("maybe")) gradPool.get(2).add(u);
+        else gradPool.get(0).add(u);
         
-        if (willLead.equals("yes")) {
-          gradPool.get(1).add(u);
-          reqGL--;
-        }
-        else if (willLead.equals("maybe")) {
-          gradPool.get(2).add(u);
-          reqGL--;
-        }
-        else {
-          gradPool.get(0).add(u);
-        }
+        gradSize++;
       }
       
       else {
-        if (workSize%5 == 0) reqWL++; 
-        workSize++;
+        if (willLead.equals("yes")) workPool.get(1).add(u);
+        else if (willLead.equals("maybe")) workPool.get(2).add(u);
+        else workPool.get(0).add(u);
         
-        if (willLead.equals("yes")) {
-          workPool.get(1).add(u);
-          reqWL--;
-        }
-        else if (willLead.equals("maybe")) {
-          workPool.get(2).add(u);
-          reqWL--;
-        }
-        else {
-          workPool.get(0).add(u);
-        }
+        workSize++;
       }
     }
+    
     
     Collections.sort(undList, new UserComp());
     int gradExtra = 5 - (gradSize % 5);
     int workExtra = 5 - (workSize % 5);
+    int reqGL = (gradSize/5) - (gradPool.get(1).size() + gradPool.get(2).size());
+    int reqWL = (workSize/5) - (workPool.get(1).size() + workPool.get(2).size());
+    
     
     while (undList.isEmpty() == false) {
       
-      while (gradExtra > 0) {
-        boolean added = false;
-        
+      while (gradExtra > 0 && undList.isEmpty() == false) {
         if (reqGL > 0) {
           if(undList.peekLast().getWillLead().equals("yes")) {
             gradPool.get(3).add(undList.pollLast());
             reqGL--;
-            added = true;
           }
           else if(undList.peekLast().getWillLead().equals("maybe")) {
             gradPool.get(4).add(undList.pollLast());
             reqGL--;
-            added = true;
           }
         }
-        else if (added == false && undList.isEmpty() == false) gradPool.get(0).add(undList.pollFirst());
+        else gradPool.get(0).add(undList.pollFirst());
         
         gradExtra--;
       }
       
       
-      while (workExtra > 0) {
-        boolean added = false;
-        
+      while (workExtra > 0 && undList.isEmpty() == false) {
         if (reqWL > 0) {
           if(undList.peekLast().getWillLead().equals("yes")) {
             workPool.get(3).add(undList.pollLast());
             reqWL--;
-            added = true;
           }
           else if(undList.peekLast().getWillLead().equals("maybe")) {
             workPool.get(4).add(undList.pollLast());
             reqWL--;
-            added = true;
           }
         }
-        else if (added == false && undList.isEmpty() == false) workPool.get(0).add(undList.pollFirst());
+        else workPool.get(0).add(undList.pollFirst());
         
         workExtra--;
       }
@@ -132,6 +108,7 @@ public class Divide {
       gradExtra = 5;
       workExtra = 5;
     }
+    
     
     Collections.shuffle(gradPool.get(0));
     Collections.shuffle(gradPool.get(1));
