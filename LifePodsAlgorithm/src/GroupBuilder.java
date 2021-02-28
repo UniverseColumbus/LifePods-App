@@ -96,12 +96,15 @@ public class GroupBuilder{
   private void add(LifePod pod, LinkedList<User> list, boolean ignoreBan) {
     added = false;
     
+    //Ignore Ban 
     if (ignoreBan == true) {
       if (pod.size < 4) pod.addUser(list.pollFirst());
       else pod.addLeader(list.pollFirst());
       added = true;
+      return;
     }
     
+    //Don't Ignore Ban
     UserIterator li = new UserIterator(list);
     User outsider = null;
     boolean banned = true;
@@ -113,7 +116,6 @@ public class GroupBuilder{
       outsider = li.next();
       
       for (User member : pod.getMembers()) {
-        
         for (int userBan : outsider.getFriends()) {
           if (userBan == member.getId()) {
             banned = true;
@@ -121,7 +123,6 @@ public class GroupBuilder{
           }
         }
         if (banned == true) break;
-        
         
         for (int podBan : member.getFriends()) {
           if (podBan == outsider.getId()) {
@@ -140,7 +141,6 @@ public class GroupBuilder{
       list.remove(index);
       added = true;
     }
-    
   }
  
 
@@ -148,8 +148,10 @@ public class GroupBuilder{
    * Adds one user to the pod 
    * if they are on a newly added member's friend list
    */
-  public void addFriend() {
+  public User findFriend(User user) {
+    User friend = null;
     
+    return friend;
   }
 
   /**
