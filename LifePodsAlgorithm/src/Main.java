@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.util.Map.Entry;
 
 public class Main{
 
@@ -18,15 +19,39 @@ public class Main{
 //    System.out.println("***********************************");
     
     GroupBuilder gb = new GroupBuilder(users);
-    ArrayList<LifePod> pods = gb.buildPods();
-    int counter = 1;
-    for (LifePod p : pods) {
-      System.out.println(counter + " " + p.toString());
-      counter++;
+    HashMap<Integer, LifePod> pods = gb.buildPods();
+    ArrayList<LifePod> podList = new ArrayList<>();
+    
+    for (Entry<Integer, LifePod> p : pods.entrySet()) {
+      System.out.println(p.getKey() + " " + p.getValue().toString());
+      podList.add(p.getValue());
     }
     
-    ExcelWriter ew = new ExcelWriter(pods);
+    ExcelWriter ew = new ExcelWriter(podList);
     ew.write(); 
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+

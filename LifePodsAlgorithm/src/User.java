@@ -2,12 +2,14 @@ import java.util.Arrays;
 
 public class User { 
   private int id;
+  private int pk = 0;
   private String plans;
   private String willLead;
   private int friends [];
   private int enemies [];
   private boolean hasGroup;
   private boolean isLeader = false;
+  private String type = "undecided";
 
   public User(int id, String plans, String willLead, int[] friends, int[] enemies) {
     super();
@@ -17,6 +19,10 @@ public class User {
     this.friends = friends;
     this.enemies = enemies;
     this.hasGroup = false;
+    
+    if (plans.equals("grad school")) type = "grad";
+    else if (plans.equals("undecided")) type = "undecided";
+    else type = "work";
   }
   
   //id
@@ -26,6 +32,24 @@ public class User {
 
   public void setId(int id) {
     this.id = id;
+  }
+  
+  //pool key
+  public int getPoolKey() {
+    return pk;
+  }
+  
+  public void setPoolKey(int pk) {
+    this.pk = pk;
+  }
+  
+  //user type
+  public String getType() {
+    return type;
+  }
+  
+  public void setType(String type) {
+    this.type = type;
   }
   
   //post-grad plans
