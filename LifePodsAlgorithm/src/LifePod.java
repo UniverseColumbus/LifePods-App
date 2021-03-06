@@ -19,6 +19,13 @@ public class LifePod {
     user.setHasGroup(true);
     size++;
   }
+  
+  public User getMember(int index) {
+    User u = null;
+    if (index < size) u = members.get(index);
+    
+    return u;
+  }
 
   public ArrayList<User> getMembers() {
     return members;
@@ -33,6 +40,7 @@ public class LifePod {
     members.add(user);
     this.leader = user;
     user.makeLeader();
+    size++;
   }
 
   public User getLeader() {

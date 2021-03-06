@@ -42,66 +42,73 @@ public class Divide {
     for (User u : users) { 
       String plans = u.getPlans();
       String willLead = u.getWillLead();
+      int key = 0;
       
       if (plans.equals("undecided")) undList.add(u);
       
       else if (plans.equals("grad school")) {
-        if (willLead.equals("yes")) gradPool.get(1).add(u);
-        else if (willLead.equals("maybe")) gradPool.get(2).add(u);
-        else gradPool.get(0).add(u);
+        if (willLead.equals("yes")) key = 1;
+        else if (willLead.equals("maybe")) key = 3;
         
+        gradPool.get(key).add(u);
+        u.setPoolKey(key);
         gradSize++;
       }
       
       else {
-        if (willLead.equals("yes")) workPool.get(1).add(u);
-        else if (willLead.equals("maybe")) workPool.get(2).add(u);
-        else workPool.get(0).add(u);
+        if (willLead.equals("yes")) key = 1;
+        else if (willLead.equals("maybe")) key = 3;
         
+        workPool.get(key).add(u);
+        u.setPoolKey(key);
         workSize++;
       }
+      
     }
     
     
     Collections.sort(undList, new UserComp());
     int gradExtra = 5 - (gradSize % 5);
     int workExtra = 5 - (workSize % 5);
-    int reqGL = (gradSize/5) - (gradPool.get(1).size() + gradPool.get(2).size());
-    int reqWL = (workSize/5) - (workPool.get(1).size() + workPool.get(2).size());
-    
+    int reqGL = (gradSize/5) - (gradPool.get(1).size() + gradPool.get(3).size());
+    int reqWL = (workSize/5) - (workPool.get(1).size() + workPool.get(3).size());
+    int key = 0;
+    User u = null;
     
     while (undList.isEmpty() == false) {
       
       while (gradExtra > 0 && undList.isEmpty() == false) {
-        if (reqGL > 0) {
-          if(undList.peekLast().getWillLead().equals("yes")) {
-            gradPool.get(3).add(undList.pollLast());
-            reqGL--;
-          }
-          else if(undList.peekLast().getWillLead().equals("maybe")) {
-            gradPool.get(4).add(undList.pollLast());
-            reqGL--;
-          }
-        }
-        else gradPool.get(0).add(undList.pollFirst());
         
+        if (reqGL > 0) u = undList.pollLast();
+        else u = undList.pollFirst();
+          
+        if(u.getWillLead().equals("yes")) key = 2;
+        else if(u.getWillLead().equals("maybe")) key = 4;
+        else key = 0;
+        
+        if (key == 2 || key == 4) reqGL--;
+        
+        gradPool.get(key).add(u);
+        u.setPoolKey(key);
+        u.setType("grad");
         gradExtra--;
       }
       
       
       while (workExtra > 0 && undList.isEmpty() == false) {
-        if (reqWL > 0) {
-          if(undList.peekLast().getWillLead().equals("yes")) {
-            workPool.get(3).add(undList.pollLast());
-            reqWL--;
-          }
-          else if(undList.peekLast().getWillLead().equals("maybe")) {
-            workPool.get(4).add(undList.pollLast());
-            reqWL--;
-          }
-        }
-        else workPool.get(0).add(undList.pollFirst());
         
+        if (reqWL > 0) u = undList.pollLast();
+        else u = undList.pollFirst();
+          
+        if(u.getWillLead().equals("yes")) key = 2;
+        else if(u.getWillLead().equals("maybe")) key = 4;
+        else key = 0;
+        
+        if (key == 2 || key == 4) reqWL--;
+        
+        workPool.get(key).add(u);
+        u.setPoolKey(key);
+        u.setType("work");
         workExtra--;
       }
       
