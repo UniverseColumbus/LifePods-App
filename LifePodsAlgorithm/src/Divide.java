@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.*;
 
 public class Divide {
-  private ArrayList<User> users;
-  private static int POD_SIZE = 5;
-  int maxPods;
   
   public HashMap<Integer, LinkedList<User>> gradPool = new HashMap<>();
   public HashMap<Integer, LinkedList<User>> workPool = new HashMap<>();
@@ -14,8 +11,6 @@ public class Divide {
   
   
   public Divide(ArrayList<User> users) {
-    this.users = users;
-    maxPods = users.size() / POD_SIZE;
     
     gradPool.put(0, new LinkedList<User>());
     gradPool.put(1, new LinkedList<User>());
