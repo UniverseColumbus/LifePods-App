@@ -5,13 +5,19 @@ import java.util.ArrayList;
 
 public class ExcelWriter {
   private ArrayList<LifePod> pods;
+  String directory;
+  String podsFileName;
   
-  public ExcelWriter(ArrayList<LifePod> pods) {
+  public ExcelWriter(ArrayList<LifePod> pods, String directory, String podsFileName) {
     this.pods = pods;
+    this.directory = directory;
+    this.podsFileName = podsFileName;
   }
   
   public void write() {
-    File csvFile = new File(System.getProperty("user.home") + "/Desktop", "LifePods.csv");
+//  File csvFile = new File(System.getProperty("user.home") + "/Desktop", "LifePods.csv");
+    
+    File csvFile = new File(directory, podsFileName);
     
     try{
       FileWriter writer = new FileWriter(csvFile);
