@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.Map.Entry;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -22,6 +23,7 @@ public class Main implements ActionListener{
   public static String fileName = "";
   public static String directoryName = "";
   public static String podsFileName = "LifePods.csv";
+  public static Timer timer;
 
   public static void main(String[] args) {
     
@@ -33,6 +35,7 @@ public class Main implements ActionListener{
     panel = frame.getContentPane();
     panel.setLayout(new GridBagLayout());
     c = new GridBagConstraints();
+    createTimer();
     
     ////////////
     field1 = new JTextField("");
@@ -49,7 +52,7 @@ public class Main implements ActionListener{
     c.ipady = 5;
     panel.add(field1, c);
     
-    button1 = new JButton("Choose Input");
+    button1 = new JButton("Source Data");
     button1.addActionListener(s);
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets(20, 0, 0, 10);
@@ -83,7 +86,7 @@ public class Main implements ActionListener{
     c.ipady = 5;
     panel.add(field2, c);
     
-    button2 = new JButton("Choose Output"); 
+    button2 = new JButton("Pods Destination"); 
     button2.addActionListener(s);
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets(10, 0, 0, 10);
@@ -137,7 +140,8 @@ public class Main implements ActionListener{
   public void actionPerformed(ActionEvent e){ 
     String s = e.getActionCommand(); 
     
-    if (s.equals("Choose Input")) { 
+    if (s.equals("Source Data")) { 
+      field1.setText("");
       
       button1.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Select file");
@@ -153,15 +157,15 @@ public class Main implements ActionListener{
         
         if (directoryChosen == false) {
           directoryName = fd.getDirectory();
-          String displayDirectory = customDirectory(directoryName);
-          textListener(displayDirectory);
+          customDirectory(directoryName);
         }
       }
       
     } 
     
     
-    if (s.equals("Choose Output")) {
+    if (s.equals("Pods Destination")) {
+      field2.setText("");
       
       button2.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Select file");
@@ -174,8 +178,7 @@ public class Main implements ActionListener{
       else {
         directoryName = fd.getDirectory();
         podsFileName = fd.getFile();
-        String displayDirectory = customDirectory(directoryName);
-        textListener(displayDirectory);
+        customDirectory(directoryName);
       }
       
     }
@@ -184,9 +187,11 @@ public class Main implements ActionListener{
     if (s.equals("Create Pods")) {
       if (!fileChosen || !directoryChosen) {
         label.setText("Error: Missing Fields");
+        timer.start();
       }
       else {
-        label.setText("Success!!!");
+        label.setText("LifePods Created!");
+        timer.start();
         System.out.println("file: " + fileName);
         System.out.println("directory: " + directoryName);
         System.out.println();
@@ -197,41 +202,28 @@ public class Main implements ActionListener{
   } 
   
   
-  private static String customDirectory(String directoryName) {
+  private static void createTimer() {
+    timer = new Timer(2000, new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        label.setText("");
+      }
+    });
+    timer.setRepeats(false);;
+  }
+  
+  
+  private static void customDirectory(String directoryName) {
     Path path = Paths.get(directoryName);
     String parent = "";
     if (path.getParent() != null) parent = path.getParent().toString();
     String displayDirectory = directoryName.replace(parent, "");
-    directoryChosen = true;
+    String last = displayDirectory.substring(displayDirectory.length() -1);
+    if (!last.equals("/")) {
+      displayDirectory += "/";
+    }
     
-    field2.setEditable(true);
-    field2.setBackground(Color.WHITE);
-    field2.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
     field2.setText(displayDirectory + podsFileName);
-    
-    return displayDirectory;
-  }
-  
-  
-  private static void textListener(String displayDirectory) {
-    int n = displayDirectory.length();
-    
-    field2.addKeyListener(new KeyListener(){
-      @Override
-      public void keyPressed(KeyEvent arg0){
-        if (field2.getCaret().getDot() <= n){
-          field2.setText(displayDirectory + field2.getText().substring(n));
-          arg0.consume();
-        }
-      }
-
-      @Override
-      public void keyReleased(KeyEvent arg0){}
-
-      @Override
-      public void keyTyped(KeyEvent arg0){}
-    });
-    
+    directoryChosen = true;
   }
   
   
@@ -258,6 +250,7 @@ public class Main implements ActionListener{
     podsFileName = directories[directories.length-1];
     ExcelWriter ew = new ExcelWriter(podList, directoryName, podsFileName);
     ew.write(); 
+    if (ew.errorMessage != null) label.setText(ew.errorMessage);
   }
   
 

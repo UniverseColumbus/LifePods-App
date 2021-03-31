@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 public class ExcelWriter {
   private ArrayList<LifePod> pods;
-  String directory;
-  String podsFileName;
+  private String directory;
+  private String podsFileName;
+  public String errorMessage = null;
   
   public ExcelWriter(ArrayList<LifePod> pods, String directory, String podsFileName) {
     this.pods = pods;
@@ -60,7 +61,8 @@ public class ExcelWriter {
     } 
     catch (IOException ex) {
       System.out.println(ex.toString());
-      System.out.println("Could not find file.");
+      System.out.println("File not found / Permission Denied.");
+      errorMessage = "Permission Denied";
     }
      
   }
