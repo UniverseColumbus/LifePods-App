@@ -3,11 +3,12 @@ import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 
+
 public class ExcelWriter {
   private ArrayList<LifePod> pods;
   private String directory;
   private String podsFileName;
-  public String errorMessage = null;
+  public String message = "";
   
   public ExcelWriter(ArrayList<LifePod> pods, String directory, String podsFileName) {
     this.pods = pods;
@@ -16,8 +17,6 @@ public class ExcelWriter {
   }
   
   public void write() {
-//  File csvFile = new File(System.getProperty("user.home") + "/Desktop", "LifePods.csv");
-    
     File csvFile = new File(directory, podsFileName);
     
     try{
@@ -58,14 +57,14 @@ public class ExcelWriter {
       
       writer.flush();
       writer.close();
+      message = "'" + podsFileName + "'  created.";
     } 
     catch (IOException ex) {
       System.out.println(ex.toString());
-      System.out.println("File not found / Permission Denied.");
-      errorMessage = "Permission Denied";
+      message = "Error: Folder Permission Denied.";
     }
      
   }
-  
-
 }
+
+

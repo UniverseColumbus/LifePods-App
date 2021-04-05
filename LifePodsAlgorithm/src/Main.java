@@ -16,7 +16,7 @@ public class Main implements ActionListener{
   public static JTextField field2;
   public static JButton button1;
   public static JButton button2;
-  public static JLabel label;
+  public static JTextField message;
   public static GridBagConstraints c;
   public static boolean fileChosen = false;
   public static boolean directoryChosen = false;
@@ -30,36 +30,46 @@ public class Main implements ActionListener{
     Main s = new Main(); 
     
     frame = new JFrame("LifePods Builder");
-    frame.setMinimumSize(new Dimension(350, 200));
+    frame.setMinimumSize(new Dimension(300, 260));
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panel = frame.getContentPane();
     panel.setLayout(new GridBagLayout());
+    panel.setBackground(Color.decode("#f0f0f0"));
     c = new GridBagConstraints();
+    c.fill = GridBagConstraints.HORIZONTAL;
     createTimer();
     
     ////////////
-    field1 = new JTextField("");
-    field1.setEditable(false);
-    field1.setBackground(Color.decode("#D0D0D0"));
-    field1.setBorder(BorderFactory.createLineBorder(Color.decode("#D0D0D0")));
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(20, 10, 0, 10);
+    JLabel label1 = new JLabel("Input Data: ");
+    c.insets = new Insets(20, 14, -1, 0);
     c.gridx = 0;
     c.gridy = 0;
     c.weightx = 5;
     c.gridwidth = 1;
+    
+    panel.add(label1, c);
+    
+    field1 = new JTextField("");
+    field1.setEditable(false);
+    field1.setBackground(Color.decode("#D0D0D0"));
+    field1.setBorder(BorderFactory.createLineBorder(Color.decode("#D0D0D0")));
+    field1.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+    c.insets = new Insets(0, 14, 0, 10);
+    c.gridx = 0;
+    c.gridy = 1;
+    c.weightx = 5;
+    c.gridwidth = 1;
     c.ipadx = 200;
-    c.ipady = 5;
+    c.ipady = 10;
     panel.add(field1, c);
     
-    button1 = new JButton("Source Data");
+    button1 = new JButton("Select File");
     button1.addActionListener(s);
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(20, 0, 0, 10);
+    c.insets = new Insets(0, 0, 0, 10);
     c.ipadx = 0;
     c.ipady = 5;
     c.gridx = 1;
-    c.gridy = 0;
+    c.gridy = 1;
     c.weightx = 1;
     panel.add(button1, c);
     
@@ -67,33 +77,42 @@ public class Main implements ActionListener{
     JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
     separator1.setForeground(Color.decode("#a8afba"));
     c.gridx = 0;
-    c.gridy = 1;
+    c.gridy = 2;
     c.gridwidth = 2;
-    c.insets = new Insets(10, 10, 0, 10);
+    c.insets = new Insets(5, 14, 0, 10);
     panel.add(separator1, c);
+    
+    JLabel label2 = new JLabel("Pods Location:");
+    c.insets = new Insets(10, 14, -4, 0);
+    c.gridx = 0;
+    c.gridy = 3;
+    c.weightx = 5;
+    c.gridwidth = 1;
+    panel.add(label2, c);
     
     field2 = new JTextField("");
     field2.setEditable(false);
     field2.setBackground(Color.decode("#D0D0D0"));
     field2.setBorder(BorderFactory.createLineBorder(Color.decode("#D0D0D0")));
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(10, 10, 0, 10);
+    field2.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+    c.insets = new Insets(0, 14, 0, 10);
     c.gridx = 0;
-    c.gridy = 2;
+    c.gridy = 4;
     c.weightx = 5;
     c.gridwidth = 1;
     c.ipadx = 200;
-    c.ipady = 5;
+    c.ipady = 10;
     panel.add(field2, c);
     
-    button2 = new JButton("Pods Destination"); 
+    button2 = new JButton("Create Pods"); 
+    button2.setForeground(Color.decode("#148229"));
+    button2.setFont(button2.getFont().deriveFont(Font.BOLD, 14f));
     button2.addActionListener(s);
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(10, 0, 0, 10);
+    c.insets = new Insets(0, 0, 0, 10);
     c.ipadx = 0;
     c.ipady = 5;
     c.gridx = 1;
-    c.gridy = 2;
+    c.gridy = 4;
     c.weightx = 1;
     panel.add(button2, c);
     
@@ -101,34 +120,22 @@ public class Main implements ActionListener{
     JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
     separator2.setForeground(Color.decode("#a8afba"));
     c.gridx = 0;
-    c.gridy = 3;
+    c.gridy = 5;
     c.gridwidth = 2;
-//    c.weighty = 1;
-    c.insets = new Insets(10, 10, 0, 10);
+    c.insets = new Insets(5, 14, 0, 10);
     panel.add(separator2, c);
     
-    label = new JLabel();
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(25, 10, 15, 10);
+    message = new JTextField("");
+    message.setEditable(false);
+    message.setBackground(Color.decode("#f0f0f0"));
+    message.setBorder(BorderFactory.createLineBorder(Color.decode("#f0f0f0")));
+    c.insets = new Insets(20, 14, 10, 10);
     c.ipadx = 0;
-    c.ipady = 5;
+    c.ipady = 10;
     c.gridx = 0;
-    c.gridy = 4;
+    c.gridy = 6;
     c.weightx = 1;
-    panel.add(label, c); 
-    
-    JButton button3 = new JButton("Create Pods");
-    button3.setForeground(Color.decode("#148229"));
-    button3.setFont(button3.getFont().deriveFont(Font.BOLD, 14f));
-    button3.addActionListener(s); 
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.insets = new Insets(25, 0, 15, 10);
-    c.ipadx = 0;
-    c.ipady = 5;
-    c.gridx = 1;
-    c.gridy = 4;
-    c.weightx = 1;
-    panel.add(button3, c); 
+    panel.add(message, c); 
     
     
     frame.pack();
@@ -138,9 +145,10 @@ public class Main implements ActionListener{
   
   @Override
   public void actionPerformed(ActionEvent e){ 
+    message.setText("");
     String s = e.getActionCommand(); 
     
-    if (s.equals("Source Data")) { 
+    if (s.equals("Select File")) { 
       field1.setText("");
       
       button1.setForeground(Color.RED);
@@ -154,47 +162,35 @@ public class Main implements ActionListener{
         fileName = fd.getDirectory() + fd.getFile();
         field1.setText(fd.getFile());
         fileChosen = true;
-        
-        if (directoryChosen == false) {
-          directoryName = fd.getDirectory();
-          customDirectory(directoryName);
-        }
       }
       
     } 
     
     
-    if (s.equals("Pods Destination")) {
+    if (s.equals("Create Pods")) {
       field2.setText("");
       
       button2.setForeground(Color.RED);
-      FileDialog fd = new FileDialog(frame,"Select file");
+      FileDialog fd = new FileDialog(frame,"Create Pods");
       fd.setMode(FileDialog.SAVE);
       fd.setFile("LifePods.csv");
       fd.setVisible(true);
-      button2.setForeground(Color.BLACK);
+      button2.setForeground(Color.decode("#148229"));
       
-      if (fd.getDirectory() == null) directoryChosen = false;
+      if (fd.getDirectory() == null || !fileChosen) {
+        directoryChosen = false;
+        if (!fileChosen && fd.getDirectory() != null) {
+          message.setText("Error: No Input File Selected.");
+          timer.start();
+        }
+      }
       else {
+        directoryChosen = true;
         directoryName = fd.getDirectory();
         podsFileName = fd.getFile();
-        customDirectory(directoryName);
-      }
-      
-    }
-   
-    
-    if (s.equals("Create Pods")) {
-      if (!fileChosen || !directoryChosen) {
-        label.setText("Error: Missing Fields");
-        timer.start();
-      }
-      else {
-        label.setText("LifePods Created!");
-        timer.start();
-        System.out.println("file: " + fileName);
-        System.out.println("directory: " + directoryName);
-        System.out.println();
+        
+        if (podsFileName.matches(".*[.].*") == false) podsFileName += ".csv";
+        displayDirectory(directoryName);
         finish();
       }
     }
@@ -202,35 +198,43 @@ public class Main implements ActionListener{
   } 
   
   
-  private static void createTimer() {
-    timer = new Timer(2000, new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        label.setText("");
-      }
-    });
-    timer.setRepeats(false);;
-  }
-  
-  
-  private static void customDirectory(String directoryName) {
+  private static void displayDirectory(String directoryName) {
     Path path = Paths.get(directoryName);
     String parent = "";
     if (path.getParent() != null) parent = path.getParent().toString();
-    String displayDirectory = directoryName.replace(parent, "");
-    String last = displayDirectory.substring(displayDirectory.length() -1);
+    String display = directoryName.replace(parent, "");
+    String last = display.substring(display.length() -1);
     if (!last.equals("/")) {
-      displayDirectory += "/";
+      display += "/";
     }
     
-    field2.setText(displayDirectory + podsFileName);
-    directoryChosen = true;
+    field2.setText(display + podsFileName);
+  }
+  
+  private static void createTimer() {
+    timer = new Timer(3000, new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        message.setText("");
+      }
+    });
+    timer.setRepeats(false);
   }
   
   
   private static void finish() {
-    ArrayList<User> users;
-    users = FileReader.readFile(fileName);    
+//    System.out.println("file: " + fileName);
+//    System.out.println("directory: " + directoryName);
+//    System.out.println();
     
+    
+    ArrayList<User> users;
+    ReadInput ri = new ReadInput(fileName);
+    users = ri.readFile();    
+    if (ri.message != null) {
+      message.setText(ri.message);
+      timer.start();
+    }
+    else {
     //prints all the users
 //    for (User u : users) {
 //      System.out.println(u.toString());
@@ -250,9 +254,22 @@ public class Main implements ActionListener{
     podsFileName = directories[directories.length-1];
     ExcelWriter ew = new ExcelWriter(podList, directoryName, podsFileName);
     ew.write(); 
-    if (ew.errorMessage != null) label.setText(ew.errorMessage);
+    message.setText(ew.message);
+    timer.start();
+    }
+    
   }
   
+
+
+
+
+
+
+
+
+
+
 
 
 
