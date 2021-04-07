@@ -1,1 +1,51 @@
-User ID,Post Grad Plans,Willing to be pod leader?,Preference 1,Preference 2,Anti-preference 1,Anti-preference 2,Anti-preference 3,Anti-preference 41,work,yes,61,13,441,52,190,3542,looking for work,yes,72,80,149,26,359,543,grad school,yes,21,65,172,96,47,2064,undecided,yes,39,66,43,87,84,3675,work,yes,70,72,75,364,194,3416,looking for work,yes,61,55,119,257,82,3987,grad school,yes,66,15,187,395,319,2868,undecided,yes,11,97,65,217,152,3029,work,yes,61,94,36,5,198,12110,looking for work,yes,79,88,42,438,350,6511,grad school,maybe,66,75,16,297,222,34812,undecided,maybe,31,27,170,194,457,24113,work,maybe,64,93,94,156,226,25614,looking for work,maybe,36,66,87,490,462,44315,work,maybe,97,27,125,249,199,20316,looking for work,maybe,96,72,36,333,215,35817,grad school,maybe,31,35,65,168,158,12318,undecided,maybe,77,17,117,263,127,31319,work,maybe,28,93,190,44,160,47220,looking for work,maybe,99,66,124,498,178,46721,grad school,no,3,50,113,114,444,11522,undecided,no,73,36,167,459,143,18123,work,no,1,41,78,289,297,38124,looking for work,no,86,39,161,121,294,32125,grad school,no,39,30,30,389,341,7026,undecided,no,31,66,104,470,329,5927,work,no,77,65,4,425,347,37628,looking for work,no,44,30,23,357,494,39929,work,no,28,16,144,31,417,4230,looking for work,no,22,38,136,115,78,22931,grad school,no,26,17,22,37,269,19232,undecided,no,33,17,163,105,160,44933,work,no,21,93,133,10,76,30934,looking for work,no,61,41,26,258,112,31935,grad school,no,84,74,83,5,238,14436,undecided,no,39,89,111,30,44,38737,work,no,86,29,21,470,281,24238,looking for work,no,30,28,11,322,334,8339,grad school,no,4,36,47,403,400,38440,undecided,no,25,5,79,425,422,48641,work,no,98,23,115,11,26,46442,looking for work,no,77,46,76,113,41,46043,work,no,69,97,95,487,163,16544,looking for work,no,87,12,178,56,127,5645,grad school,no,82,49,15,31,452,15046,undecided,no,71,33,33,291,231,45747,work,no,86,50,141,157,261,25348,looking for work,no,78,19,125,229,302,1449,grad school,no,45,14,78,366,265,26550,undecided,no,21,43,177,151,277,25
+User ID,Names,Post Grad Plans,Willing to be pod leader?,Preference 1,Preference 2,Anti-preference 1,Anti-preference 2,Anti-preference 3,Anti-preference 4
+1,Hermione Granger,work,yes,61,13,441,52,190,354
+2,Harry Potter,looking for work,yes,72,80,149,26,359,54
+3,Draco Malfoy,grad school,yes,21,65,172,95,47,206
+4,Lord Voldemort,undecided,yes,39,66,43,87,84,367
+5,Ron Weasley,work,yes,70,72,75,364,194,341
+6,Albus Dumbledore,looking for work,yes,61,55,119,257,82,398
+7,Severus Snape,grad school,yes,66,15,187,395,319,286
+8,Luna Lovegood,undecided,yes,11,97,65,217,152,302
+9,Rubeus Hagrid,work,yes,61,94,36,5,198,121
+10,Dobby Elf,looking for work,yes,79,88,42,438,350,65
+11,Bellatrix Lestrange,grad school,maybe,66,75,16,297,222,348
+12,Neville Longbottom,undecided,maybe,31,27,170,194,457,241
+13,Minerva McGonagall,work,maybe,64,93,94,156,226,256
+14,Remus Lupin,looking for work,maybe,36,66,87,490,462,443
+15,Newt Scamander,work,maybe,97,27,125,249,199,203
+16,Gellert Grindelwald,looking for work,maybe,96,72,36,333,215,358
+17,Fred Weasley,grad school,maybe,31,35,65,168,158,123
+18,Sirius Black,undecided,maybe,77,17,117,263,127,313
+19,Dolores Umbridge,work,maybe,28,93,190,44,160,472
+20,Ginny Weasley,looking for work,maybe,99,66,124,498,178,467
+21,Pansy Parkinson,grad school,no,3,50,113,114,444,115
+22,Lucius Malfoy,undecided,no,73,36,167,459,143,181
+23,Nymphadora Tonks,work,no,1,41,78,289,297,381
+24,Hedwig Owl,looking for work,no,86,39,161,121,294,321
+25,Peter Pettigrew,grad school,no,39,30,30,389,341,70
+26,Cho Chang,undecided,no,31,66,104,470,329,59
+27,Nagini Snake,work,no,77,65,4,425,347,376
+28,Dudley Dursley,looking for work,no,44,30,23,357,494,399
+29,George Weasley,work,no,28,16,144,31,417,42
+30,Fleur Delacour,looking for work,no,22,38,136,115,78,229
+31,Narcissa Malfoy,grad school,no,26,17,22,37,269,192
+32,Alastor Moody,undecided,no,33,17,163,105,160,449
+33,Peeves Ghost,work,no,21,93,133,10,76,309
+34,Regulus Black,looking for work,no,61,41,26,258,112,319
+35,Lily Potter,grad school,no,84,74,83,5,238,144
+36,James Potter,undecided,no,39,89,111,30,44,387
+37,Argus Filch,work,no,86,29,21,470,281,242
+38,Molly Weasley,looking for work,no,30,28,11,322,334,83
+39,Sybill Trelawney,grad school,no,4,36,47,403,400,384
+40,Moaning Myrtle,undecided,no,25,5,79,425,422,486
+41,Oliver Wood,work,no,98,23,115,11,26,464
+42,Dean Thomas,looking for work,no,77,46,76,113,41,460
+43,Seamus Finnigan,work,no,69,97,95,487,163,165
+44,Lavender Brown,looking for work,no,87,12,178,56,127,56
+45,Vernon Dursley,grad school,no,82,49,15,31,452,150
+46,Petunia Dursley,undecided,no,71,33,33,291,231,457
+47,Filius Flitwick,work,no,86,50,141,157,261,253
+48,Madame Hooch,looking for work,no,78,19,125,229,302,14
+49,Pomona Sprout,grad school,no,45,14,78,366,265,265
+50,Gilderoy Lockhart,undecided,no,21,43,177,151,277,25
