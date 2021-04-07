@@ -27,6 +27,8 @@ public class ExcelWriter {
       writer.append(",");
       writer.append("User ID");
       writer.append(",");
+      writer.append("Name");
+      writer.append(",");
       writer.append("Post Grad Plans");
       writer.append(",");
       writer.append("Status");
@@ -44,6 +46,8 @@ public class ExcelWriter {
         
         for (User member : members) {
           writer.append(String.valueOf(member.getId()));
+          writer.append(",");
+          writer.append(member.getName());
           writer.append(",");
           writer.append(member.getPlans());
           writer.append(",");

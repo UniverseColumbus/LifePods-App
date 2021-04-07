@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 
-public class GroupBuilder{
+public class PodBuilder{
   private ArrayList<User> users;
   private static int POD_SIZE = 5;
   int maxPods;
@@ -18,7 +18,7 @@ public class GroupBuilder{
   public HashMap<Integer, LifePod> podPool = new HashMap<>();
   
   
-  public GroupBuilder(ArrayList<User> users) {
+  public PodBuilder(ArrayList<User> users) {
     this.users = users;
     maxPods = users.size() / POD_SIZE;
     
@@ -339,6 +339,7 @@ public class GroupBuilder{
 
 
 }
+
 
 
 

@@ -2,6 +2,7 @@ import java.util.Arrays;
 
 public class User { 
   private int id;
+  private String name;
   private int pk = 0;
   private String plans;
   private String willLead;
@@ -10,6 +11,8 @@ public class User {
   private boolean hasGroup;
   private boolean isLeader = false;
   private String type = "undecided";
+  
+  public User() {}
 
   public User(int id, String plans, String willLead, int[] friends, int[] enemies) {
     super();
@@ -19,10 +22,15 @@ public class User {
     this.friends = friends;
     this.enemies = enemies;
     this.hasGroup = false;
-    
-    if (plans.equals("grad school")) type = "grad";
-    else if (plans.equals("undecided")) type = "undecided";
-    else type = "work";
+  }
+  
+  //name
+  public String getName() {
+    return name;
+  }
+  
+  public void setName(String name) {
+    this.name = name;
   }
   
   //id
@@ -59,6 +67,9 @@ public class User {
 
   public void setPlans(String plans) {
     this.plans = plans;
+    if (plans.equals("grad school")) type = "grad";
+    else if (plans.equals("undecided")) type = "undecided";
+    else type = "work";
   }
 
   //pod leader
