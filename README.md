@@ -1,2 +1,2 @@
-# SustainableLifeApp
+# LifePods App
 COSC 224 Project
