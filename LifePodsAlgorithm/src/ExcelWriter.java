@@ -1,74 +1,119 @@
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 
 public class ExcelWriter {
+  
   private ArrayList<LifePod> pods;
   private String directory;
   private String podsFileName;
   public String message = "";
+  public int totalPods = 0;
   
   public ExcelWriter(ArrayList<LifePod> pods, String directory, String podsFileName) {
     this.pods = pods;
     this.directory = directory;
     this.podsFileName = podsFileName;
+    totalPods = pods.size();
   }
   
-  public void write() {
-    File csvFile = new File(directory, podsFileName);
+  public void write(){
+  
+    XSSFWorkbook workbook = new XSSFWorkbook();
+    XSSFSheet sheet = workbook.createSheet("LifePods");
+    sheet.setColumnWidth(0,3000);
+    sheet.setColumnWidth(2,5000);
+    sheet.setColumnWidth(3,4000);
+    XSSFRow row = sheet.createRow(0);
+    Cell cell = row.createCell(0);
+    cell.setCellValue("List of LifePods");
+    row = sheet.createRow(1);
+    cell = row.createCell(0);
+    cell.setCellValue("LifePod");
+    cell = row.createCell(1);
+    cell.setCellValue("User ID");
+    cell = row.createCell(2);
+    cell.setCellValue("Name");
+    cell = row.createCell(3);
+    cell.setCellValue("Post Grad Plans");
+    cell = row.createCell(4);
+    cell.setCellValue("Status");
     
-    try{
-      FileWriter writer = new FileWriter(csvFile);
-      writer.append("List of LifePods");
-      writer.append("\n");
-      writer.append("LifePod");
-      writer.append(",");
-      writer.append("User ID");
-      writer.append(",");
-      writer.append("Name");
-      writer.append(",");
-      writer.append("Post Grad Plans");
-      writer.append(",");
-      writer.append("Status");
-      writer.append("\n\n");
+   
+    int rowNum = 3;
+    for (int i=0; i<pods.size(); i++) {
+      LifePod pod = pods.get(i);
+      ArrayList<User> members = pod.getMembers();
       
-      for (int i=0; i<pods.size(); i++) {
-        LifePod pod = pods.get(i);
-        ArrayList<User> members = pod.getMembers();
+      rowNum++;
+      row = sheet.createRow(rowNum);
+      cell = row.createCell(0);
+      cell.setCellValue(pod.getType().toUpperCase() + " POD");
+      rowNum++;
+      row = sheet.createRow(rowNum);
+      
+      for (User member : members) {
+        cell = row.createCell(1);
+        cell.setCellValue(member.getId());
+        cell = row.createCell(2);
+        cell.setCellValue(member.getName());
+        cell = row.createCell(3);
+        cell.setCellValue(member.getPlans());
         
-        writer.append(pod.getType().toUpperCase() + " POD");
-        writer.append("\n");
-        writer.append(",");
-        
-        
-        
-        for (User member : members) {
-          writer.append(String.valueOf(member.getId()));
-          writer.append(",");
-          writer.append(member.getName());
-          writer.append(",");
-          writer.append(member.getPlans());
-          writer.append(",");
-          if (member.isLeader()) writer.append("Pod Leader");
-          writer.append("\n");
-          writer.append(",");
+        if (member.isLeader()) {
+          cell = row.createCell(4);
+          cell.setCellValue("Pod Leader");
         }
-        
-        writer.append("\n");
+        rowNum++;
+        row = sheet.createRow(rowNum);
       }
       
-      writer.flush();
-      writer.close();
-      message = "'" + podsFileName + "'  created.";
-    } 
-    catch (IOException ex) {
-      System.out.println(ex.toString());
-      message = "Error: Folder Permission Denied.";
+      rowNum++;
     }
-     
+    
+    try {
+      File excelFile = new File(directory, podsFileName);
+      FileOutputStream out = new FileOutputStream(excelFile);
+      workbook.write(out);
+      workbook.close();
+      message = "'" + podsFileName + "'  created.";
+    }
+    catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-

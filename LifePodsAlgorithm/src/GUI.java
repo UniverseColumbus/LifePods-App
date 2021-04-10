@@ -19,6 +19,8 @@ public class GUI implements ActionListener{
   public String fileName = "";
   public String directoryName = "";
   public String podsFileName = "LifePods.csv";
+  public String readType = "";
+  public String writeType = "";
   public Timer timer;
   private Main main;
   
@@ -152,15 +154,25 @@ public class GUI implements ActionListener{
       
       button1.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Select file");
-      fd.setFilenameFilter((File dir, String name) -> name.endsWith(".csv"));
+      fd.setFilenameFilter(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return false || name.toLowerCase().endsWith(".csv")
+              || name.toLowerCase().endsWith(".xlsx");
+        }
+      });
       fd.setVisible(true);
       button1.setForeground(Color.BLACK);
       
-      if (fd.getFile() == null) fileChosen = false;
+      String file = fd.getFile();
+      if (file == null) fileChosen = false;
       else {
-        fileName = fd.getDirectory() + fd.getFile();
-        field1.setText(fd.getFile());
+        fileName = fd.getDirectory() + file;
+        field1.setText(file);
         fileChosen = true;
+        
+        readType = file.split("\\.")[1];
+        System.out.println("read type is: " + readType);
       }
       
     } 
@@ -172,7 +184,7 @@ public class GUI implements ActionListener{
       button2.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Create Pods");
       fd.setMode(FileDialog.SAVE);
-      fd.setFile("LifePods.csv");
+      fd.setFile("LifePods.xlsx");
       fd.setVisible(true);
       button2.setForeground(Color.decode("#148229"));
       
@@ -190,7 +202,10 @@ public class GUI implements ActionListener{
         
         if (podsFileName.matches(".*[.].*") == false) podsFileName += ".csv";
         displayDirectory(directoryName);
-        main.finish();
+        writeType = podsFileName.split("\\.")[1];
+        System.out.println("write type is: " + writeType);
+        
+        main.finish(readType, writeType);
       }
     }
   } 

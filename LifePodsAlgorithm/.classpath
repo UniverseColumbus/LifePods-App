@@ -6,5 +6,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/ooxml-lib/xmlbeans-4.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/poi-ooxml-lite-5.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/poi-ooxml-5.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/ooxml-lib/commons-compress-1.20.jar"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/lib/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="/Users/michaelorr/Desktop/binary-poi/poi-5.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
