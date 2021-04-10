@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.*;
 
-public class ReadInput2 {
+public class CsvReader {
   public String message = null;
   public String fileName = "";
   public ArrayList<User> users = new ArrayList<User>();
   public HashMap<Integer, String> map = new HashMap<>();
   
-  public ReadInput2(String fileName) {
+  public CsvReader(String fileName) {
     this.fileName = fileName;
   }
     

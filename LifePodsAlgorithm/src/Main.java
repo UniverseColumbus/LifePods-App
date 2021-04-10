@@ -12,18 +12,29 @@ public class Main{
     gui.launch();
     
 //    runWithoutGUI();
+    
   }
   
-  public void finish() {
-    
-    ArrayList<User> users;
-    ReadInput2 ri = new ReadInput2(gui.fileName);
-    users = ri.readFile();    
-    if (ri.message != null) {
-      gui.message.setText(ri.message);
+  public void finish(String readType, String writeType) {
+    ArrayList<User> users = null;
+    String message = "";
+    if (readType.equals("csv")) {
+      CsvReader cr = new CsvReader(gui.fileName);
+      users = cr.readFile();  
+      message = cr.message;
+    }
+    else if (readType.equals("xlsx")) {
+      ExcelReader er = new ExcelReader(gui.fileName);
+      users = er.readFile();
+      message = er.message;
+    }
+
+        
+    if (message != null) {
+      gui.message.setText(message);
       gui.timer.start();
     }
-    else {
+    else if (users != null){
       PodBuilder gb = new PodBuilder(users);
       HashMap<Integer, LifePod> pods = gb.buildPods();
       ArrayList<LifePod> podList = new ArrayList<>();
@@ -36,10 +47,18 @@ public class Main{
       String[] directories = gui.field2.getText().split("/");
       gui.podsFileName = directories[directories.length-1];
       
-  
-      ExcelWriter ew = new ExcelWriter(podList, gui.directoryName, gui.podsFileName);
-      ew.write(); 
-      gui.message.setText(ew.message);
+      if (writeType.equals("csv")) {
+        CsvWriter cw = new CsvWriter(podList, gui.directoryName, gui.podsFileName);
+        cw.write(); 
+        message = cw.message;
+      }
+      else if (writeType.equals("xlsx")) {
+        ExcelWriter ew = new ExcelWriter(podList, gui.directoryName, gui.podsFileName); 
+        ew.write();
+        message = ew.message;
+      }
+      
+      gui.message.setText(message);
       gui.timer.start();
     }
     
@@ -49,9 +68,13 @@ public class Main{
   public static void runWithoutGUI() {
     
     ArrayList<User> users;
-    String fileName = "src/source/users.csv";
-    ReadInput2 ri = new ReadInput2(fileName);
-    users = ri.readFile();  
+    String fileName = "src/source/users.xlsx";
+    
+//    CsvReader cr = new CsvReader(fileName);
+//    users = cr.readFile();
+    
+    ExcelReader er = new ExcelReader(fileName);
+    users = er.readFile();  
     
 //  prints all the users
 //  for (User u : users) {
@@ -69,13 +92,19 @@ public class Main{
     }
     
     String directoryName = "/Users/michaelorr/Desktop";
-    String podsFileName = "LifePods.csv";
     
-    ExcelWriter ew = new ExcelWriter(podList, directoryName, podsFileName);
+//    String podsFileName = "LifePods.csv";
+//    CsvWriter cw = new CsvWriter(podList, directoryName, podsFileName);
+//    cw.write();
+    
+    String podsFileName = "LifePods.xlsx";
+    ExcelWriter ew = new ExcelWriter(podList, directoryName, podsFileName); 
     ew.write();
+    
   }
 
 
+  
 
 
 
