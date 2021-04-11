@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class LifePod {  
   private ArrayList<User> members;
   private User leader;

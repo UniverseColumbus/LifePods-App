@@ -12,10 +12,10 @@ public class Main{
     gui.launch();
     
 //    runWithoutGUI();
-    
   }
   
   public void finish(String readType, String writeType) {
+    
     ArrayList<User> users = null;
     String message = "";
     if (readType.equals("csv")) {
@@ -46,6 +46,7 @@ public class Main{
       
       String[] directories = gui.field2.getText().split("/");
       gui.podsFileName = directories[directories.length-1];
+      
       
       if (writeType.equals("csv")) {
         CsvWriter cw = new CsvWriter(podList, gui.directoryName, gui.podsFileName);

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,11 +21,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class ExcelReader {
+  
+  private String fileName = "";
+  private ArrayList<User> users = new ArrayList<User>();
+  private HashMap<Integer, String> map = new HashMap<>();
+  private XSSFRow row;
   public String message = null;
-  public String fileName = "";
-  public ArrayList<User> users = new ArrayList<User>();
-  public HashMap<Integer, String> map = new HashMap<>();
-  static XSSFRow row;
   
   public ExcelReader(String fileName) {
     this.fileName = fileName;
@@ -54,8 +56,10 @@ public class ExcelReader {
           String str = "";
           String val = map.get(key);
           Cell cell = row.getCell(key);
+          
           if (cell != null) {
             CellType type = cell.getCellType();
+            
             if (type == CellType.NUMERIC) {
               double dval = cell.getNumericCellValue();
               int ival = (int)dval;
@@ -89,9 +93,17 @@ public class ExcelReader {
       fis.close();
       workbook.close();
     }
+    catch (FileNotFoundException ex) {
+      System.out.println(ex.toString());
+      message = "Error: Input File Not Found.";
+    }
+    catch (NumberFormatException ex) {
+      System.out.println(ex.toString());
+      message = "Error: Wrong Input Format.";
+    }
     catch (Exception ex) {
-      message = "Error: Something went Wrong.";
-      ex.printStackTrace();
+      System.out.println(ex.toString());
+      message = "Error: Failed to Read Input Data.";
     }
     
     return users;
@@ -110,17 +122,20 @@ public class ExcelReader {
       
       while (index < size) {
         XSSFCell cell = row.getCell(index);
-        String str = cell.toString();
         
-        if (str.isEmpty()) map.put(key, "ignore");
-        else if (str.equals("User ID")) map.put(key, "id");
-        else if (str.equals("Names")) map.put(key, "names");
-        else if (str.equals("Post Grad Plans")) map.put(key, "plans");
-        else if (str.equals("Willing to be pod leader?")) map.put(key, "willLead");
-        else if (str.matches("Preference [1-2]")) map.put(key, "friends");
-        else if (str.matches("Anti-preference [1-4]")) map.put(key, "enemies");
-        else map.put(key, "ignore");
-         
+        if (cell == null) map.put(key, "ignore");
+        else {
+          String str = cell.toString();
+          
+          if (str.isEmpty()) map.put(key, "ignore");
+          else if (str.equals("User ID")) map.put(key, "id");
+          else if (str.equals("Names")) map.put(key, "names");
+          else if (str.equals("Post Grad Plans")) map.put(key, "plans");
+          else if (str.equals("Willing to be pod leader?")) map.put(key, "willLead");
+          else if (str.matches("Preference [1-2]")) map.put(key, "friends");
+          else if (str.matches("Anti-preference [1-4]")) map.put(key, "enemies");
+          else map.put(key, "ignore");
+        }
         
         if (!map.get(key).equals("ignore")) total++;
         if (total >= 10) {
