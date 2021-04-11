@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 public class CsvWriter {
+  
   private ArrayList<LifePod> pods;
   private String directory;
   private String podsFileName;
@@ -66,6 +67,10 @@ public class CsvWriter {
     catch (IOException ex) {
       System.out.println(ex.toString());
       message = "Error: Folder Permission Denied.";
+    }
+    catch (Exception ex) {
+      System.out.println(ex.toString());
+      message = "Error: Failed to Create Pods.";
     }
      
   }

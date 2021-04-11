@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 
+
 public class GUI implements ActionListener{
   public JFrame frame;
   public Container panel;  
@@ -30,7 +31,7 @@ public class GUI implements ActionListener{
 
   public void launch() {
     
-    frame = new JFrame("LifePods Builder");
+    frame = new JFrame("LifePods Creator");
     frame.setMinimumSize(new Dimension(300, 260));
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panel = frame.getContentPane();
@@ -109,6 +110,7 @@ public class GUI implements ActionListener{
     button2.setForeground(Color.decode("#148229"));
     button2.setFont(button2.getFont().deriveFont(Font.BOLD, 14f));
     button2.addActionListener(this);
+    button2.setEnabled(false);
     c.insets = new Insets(0, 0, 0, 10);
     c.ipadx = 0;
     c.ipady = 5;
@@ -151,6 +153,9 @@ public class GUI implements ActionListener{
     
     if (s.equals("Select File")) { 
       field1.setText("");
+      field2.setText("");
+      button2.setEnabled(false);
+      
       
       button1.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Select file");
@@ -167,12 +172,13 @@ public class GUI implements ActionListener{
       String file = fd.getFile();
       if (file == null) fileChosen = false;
       else {
+        button2.setEnabled(true);
+        
         fileName = fd.getDirectory() + file;
         field1.setText(file);
         fileChosen = true;
         
         readType = file.split("\\.")[1];
-        System.out.println("read type is: " + readType);
       }
       
     } 
@@ -188,13 +194,7 @@ public class GUI implements ActionListener{
       fd.setVisible(true);
       button2.setForeground(Color.decode("#148229"));
       
-      if (fd.getDirectory() == null || !fileChosen) {
-        directoryChosen = false;
-        if (!fileChosen && fd.getDirectory() != null) {
-          message.setText("Error: No Input File Selected.");
-          timer.start();
-        }
-      }
+      if (fd.getDirectory() == null) directoryChosen = false;
       else {
         directoryChosen = true;
         directoryName = fd.getDirectory();
@@ -203,7 +203,7 @@ public class GUI implements ActionListener{
         if (podsFileName.matches(".*[.].*") == false) podsFileName += ".csv";
         displayDirectory(directoryName);
         writeType = podsFileName.split("\\.")[1];
-        System.out.println("write type is: " + writeType);
+        
         
         main.finish(readType, writeType);
       }
@@ -224,6 +224,7 @@ public class GUI implements ActionListener{
     field2.setText(display + podsFileName);
   }
   
+  
   private void createTimer() {
     timer = new Timer(3000, new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -232,4 +233,23 @@ public class GUI implements ActionListener{
     });
     timer.setRepeats(false);
   }
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

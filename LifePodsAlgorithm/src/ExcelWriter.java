@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 //jar files from: https://poi.apache.org/download.html
 //xmlbeans-4.0.0.jar 
@@ -14,20 +15,17 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
-
 public class ExcelWriter {
   
   private ArrayList<LifePod> pods;
   private String directory;
   private String podsFileName;
   public String message = "";
-  public int totalPods = 0;
   
   public ExcelWriter(ArrayList<LifePod> pods, String directory, String podsFileName) {
     this.pods = pods;
     this.directory = directory;
     this.podsFileName = podsFileName;
-    totalPods = pods.size();
   }
   
   public void write(){
@@ -91,8 +89,13 @@ public class ExcelWriter {
       workbook.close();
       message = "'" + podsFileName + "'  created.";
     }
+    catch (IOException ex) {
+      System.out.println(ex.toString());
+      message = "Error: Folder Permission Denied.";
+    }
     catch (Exception ex) {
-      ex.printStackTrace();
+      System.out.println(ex.toString());
+      message = "Error: Failed to Create Pods.";
     }
   }
 

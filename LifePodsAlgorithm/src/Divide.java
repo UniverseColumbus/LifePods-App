@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.*;
 
+
 public class Divide {
   
   public HashMap<Integer, LinkedList<User>> gradPool = new HashMap<>();

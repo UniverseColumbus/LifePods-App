@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.*;
 
+
 public class CsvReader {
+  
+  private String fileName = "";
+  private ArrayList<User> users = new ArrayList<User>();
+  private HashMap<Integer, String> map = new HashMap<>();
   public String message = null;
-  public String fileName = "";
-  public ArrayList<User> users = new ArrayList<User>();
-  public HashMap<Integer, String> map = new HashMap<>();
   
   public CsvReader(String fileName) {
     this.fileName = fileName;
@@ -56,13 +58,17 @@ public class CsvReader {
 
       }
     } 
-    catch (FileNotFoundException e) {
-      System.out.println(e.toString());
+    catch (FileNotFoundException ex) {
+      System.out.println(ex.toString());
       message = "Error: Input File Not Found.";
     }
-    catch (NumberFormatException e) {
-      System.out.println(e.toString());
+    catch (NumberFormatException ex) {
+      System.out.println(ex.toString());
       message = "Error: Wrong Input Format.";
+    }
+    catch (Exception ex) {
+      System.out.println(ex.toString());
+      message = "Error: Failed to Read Input Data.";
     }
       
     return users;
