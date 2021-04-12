@@ -16,7 +16,7 @@ public class PodBuilder{
   private HashMap<Integer, LinkedList<User>> gradPool = new HashMap<>();
   private HashMap<Integer, LinkedList<User>> workPool = new HashMap<>();
   public HashMap<Integer, LifePod> podPool = new HashMap<>();
-  
+ 
   
   public PodBuilder(ArrayList<User> users) {
     this.users = users;
@@ -43,19 +43,27 @@ public class PodBuilder{
       workSize += e.getValue().size();
     }
     
+    int totalSize = gradSize + workSize;
     int key = 1;
     
-    for (int i=0; i < gradSize/5; i++) {
+    
+    while (gradSize > 0 && totalSize > 0) {
       podPool.get(key).setType("grad");
       addMembers(podPool.get(key), gradPool);
       key++;
+      
+      gradSize -= 5;
+      totalSize -= 5;
     }
-    
-    for (int i=0; i < workSize/5; i++) {
+    while (workSize > 0 && totalSize > 0) {
       podPool.get(key).setType("work");
       addMembers(podPool.get(key), workPool);
       key++;
+      
+      workSize -= 5;
+      totalSize -= 5;
     }
+    
     
     return podPool;
   }
@@ -64,17 +72,20 @@ public class PodBuilder{
   private void addMembers(LifePod pod, HashMap<Integer, LinkedList<User>> pool) {
     int num = 0;
     boolean ignoreBan = false;
+    boolean checkOtherPool = false;
+    
     
     while (num < 5) {
       boolean added = false;
+      
       User u = null;
       int[] keys = new int[5];
       
       if (num == 0) keys = new int[] {1, 2, 3, 4, 0};  
       else keys = new int[] {0, 4, 3, 2, 1};          
       
-      
-      for (int i=0; i<keys.length; i++) {
+      int i = 0;
+      while (i < keys.length && added == false) {
         
         if (pool.get(keys[i]).isEmpty() == false) {
           if (ignoreBan) u = pool.get(keys[i]).pollFirst();
@@ -89,8 +100,8 @@ public class PodBuilder{
           added = true;
           ignoreBan = false;
           num++;
-          break;
         }
+        i++;
       }
       
       
@@ -107,10 +118,44 @@ public class PodBuilder{
           num++;
         }
       }
-      else ignoreBan = true;
+      else if (ignoreBan == false) {
+        ignoreBan = true;
+      }
+      else if (checkOtherPool == false) {
+        if (pool == workPool) pool = gradPool;
+        else pool = workPool;
+        
+        ignoreBan = false;
+        checkOtherPool = true;
+      }
     }
   }
 
+  
+  /**
+   * Asks if the user in question can be added. 
+   */
+  private User findUser(LifePod pod, LinkedList<User> list) {
+    
+    UserIterator li = new UserIterator(list);
+    User outsider = null;
+    boolean banned = true;
+    int index = 0;
+    
+    while (li.hasNext() && banned == true) {
+      index = li.nextIndex();
+      outsider = li.next();
+      banned = checkBan(pod, outsider);
+    }
+    
+    if (banned == false && outsider != null) {
+      list.remove(index);
+      return outsider;
+    }
+    
+    return null;
+  }
+  
 
   /**
    * Adds one user to the pod if they are
@@ -160,31 +205,6 @@ public class PodBuilder{
     }
     
     return isMutual;
-  }
-  
-  /**
-   * Asks if the user in question can be added. 
-   */
-  private User findUser(LifePod pod, LinkedList<User> list) {
-    
-    UserIterator li = new UserIterator(list);
-    User outsider = null;
-    boolean banned = true;
-    int index = 0;
-    
-    while (li.hasNext() && banned == true) {
-      banned = false;
-      index = li.nextIndex();
-      outsider = li.next();
-      banned = checkBan(pod, outsider);
-    }
-    
-    if (banned == false && outsider != null) {
-      list.remove(index);
-      return outsider;
-    }
-    
-    return null;
   }
   
   
