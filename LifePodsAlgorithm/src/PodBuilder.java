@@ -24,7 +24,7 @@ public class PodBuilder{
     maxPods = 0;
     int totalUsers = users.size();
     while (totalUsers > 0) {
-      totalUsers -= 5;
+      totalUsers -= POD_SIZE;
       maxPods++;
     }
     
@@ -81,7 +81,7 @@ public class PodBuilder{
     boolean checkOtherPool = false;
     boolean nobodyLeft = false;
     
-    while (num < 5 && nobodyLeft == false) {
+    while (num < POD_SIZE && nobodyLeft == false) {
       boolean added = false;
       
       User u = null;
