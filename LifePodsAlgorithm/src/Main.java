@@ -7,11 +7,11 @@ public class Main{
   public static GUI gui;
 
   public static void main(String[] args) {
-    Main m = new Main();
-    gui = new GUI(m); 
-    gui.launch();
+//    Main m = new Main();
+//    gui = new GUI(m); 
+//    gui.launch();
     
-//    runWithoutGUI();
+    runWithoutGUI();
   }
   
   public void finish(String readType, String writeType) {
@@ -69,7 +69,7 @@ public class Main{
   public static void runWithoutGUI() {
     
     ArrayList<User> users;
-    String fileName = "src/source/users.xlsx";
+    String fileName = "src/source/test8.xlsx";
     
 //    CsvReader cr = new CsvReader(fileName);
 //    users = cr.readFile();
