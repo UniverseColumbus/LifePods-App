@@ -9,7 +9,7 @@ public class Divide {
   public HashMap<Integer, LinkedList<User>> gradPool = new HashMap<>();
   public HashMap<Integer, LinkedList<User>> workPool = new HashMap<>();
   public LinkedList<User> undList = new LinkedList<>();
-  
+  private static int POD_SIZE = 5;
   
   public Divide(ArrayList<User> users) {
     
@@ -64,10 +64,21 @@ public class Divide {
     
     
     Collections.sort(undList, new UserComp());
-    int gradExtra = 5 - (gradSize % 5);
-    int workExtra = 5 - (workSize % 5);
-    int reqGL = (gradSize/5) - (gradPool.get(1).size() + gradPool.get(3).size());
-    int reqWL = (workSize/5) - (workPool.get(1).size() + workPool.get(3).size());
+    int gradExtra = POD_SIZE - (gradSize % POD_SIZE);
+    int workExtra = POD_SIZE - (workSize % POD_SIZE);
+    int reqGL = 0;
+    int reqWL = 0;
+    while (gradSize > 0) {
+      gradSize -= POD_SIZE;
+      reqGL++;
+    }
+    while (workSize > 0) {
+      workSize -= POD_SIZE;
+      reqWL++;
+    }
+    int extraGL = reqGL - (gradPool.get(1).size() + gradPool.get(3).size());
+    int extraWL = reqWL - (workPool.get(1).size() + workPool.get(3).size());
+    
     int key = 0;
     User u = null;
     
@@ -75,14 +86,14 @@ public class Divide {
       
       while (gradExtra > 0 && undList.isEmpty() == false) {
         
-        if (reqGL > 0) u = undList.pollLast();
+        if (extraGL > 0) u = undList.pollLast();
         else u = undList.pollFirst();
           
         if(u.getWillLead().equals("yes")) key = 2;
         else if(u.getWillLead().equals("maybe")) key = 4;
         else key = 0;
         
-        if (key == 2 || key == 4) reqGL--;
+        if (key == 2 || key == 4) extraGL--;
         
         gradPool.get(key).add(u);
         u.setPoolKey(key);
@@ -93,14 +104,14 @@ public class Divide {
       
       while (workExtra > 0 && undList.isEmpty() == false) {
         
-        if (reqWL > 0) u = undList.pollLast();
+        if (extraWL > 0) u = undList.pollLast();
         else u = undList.pollFirst();
           
         if(u.getWillLead().equals("yes")) key = 2;
         else if(u.getWillLead().equals("maybe")) key = 4;
         else key = 0;
         
-        if (key == 2 || key == 4) reqWL--;
+        if (key == 2 || key == 4) extraWL--;
         
         workPool.get(key).add(u);
         u.setPoolKey(key);
@@ -108,8 +119,8 @@ public class Divide {
         workExtra--;
       }
       
-      gradExtra = 5;
-      workExtra = 5;
+      gradExtra = POD_SIZE;
+      workExtra = POD_SIZE;
     }
     
     

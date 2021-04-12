@@ -20,6 +20,9 @@ public class PodBuilder{
   
   public PodBuilder(ArrayList<User> users) {
     this.users = users;
+    Divide div = new Divide(users);
+    gradPool = div.gradPool;
+    workPool = div.workPool;
     
     maxPods = 0;
     int totalUsers = users.size();
@@ -27,10 +30,6 @@ public class PodBuilder{
       totalUsers -= POD_SIZE;
       maxPods++;
     }
-    
-    Divide div = new Divide(users);
-    gradPool = div.gradPool;
-    workPool = div.workPool;
     
     for (int i=1; i<=maxPods; i++) {
       podPool.put(i, new LifePod());
@@ -58,16 +57,16 @@ public class PodBuilder{
       addMembers(podPool.get(key), gradPool);
       key++;
       
-      gradSize -= 5;
-      totalSize -= 5;
+      gradSize -= POD_SIZE;
+      totalSize -= POD_SIZE;
     }
     while (workSize > 0 && totalSize > 0) {
       podPool.get(key).setType("work");
       addMembers(podPool.get(key), workPool);
       key++;
       
-      workSize -= 5;
-      totalSize -= 5;
+      workSize -= POD_SIZE;
+      totalSize -= POD_SIZE;
     }
     
     
@@ -170,7 +169,7 @@ public class PodBuilder{
    * on a newly added member's friend list
    */
   public User findFriend(User u, LifePod pod) {
-    if (pod.size >= 5) return null;
+    if (pod.size >= POD_SIZE) return null;
     
     int random = ThreadLocalRandom.current().nextInt(0, 2);
     int friendId = u.getFriends()[random];
