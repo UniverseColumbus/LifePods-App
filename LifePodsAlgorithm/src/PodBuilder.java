@@ -20,7 +20,13 @@ public class PodBuilder{
   
   public PodBuilder(ArrayList<User> users) {
     this.users = users;
-    maxPods = users.size() / POD_SIZE;
+    
+    maxPods = 0;
+    int totalUsers = users.size();
+    while (totalUsers > 0) {
+      totalUsers -= 5;
+      maxPods++;
+    }
     
     Divide div = new Divide(users);
     gradPool = div.gradPool;
@@ -73,9 +79,9 @@ public class PodBuilder{
     int num = 0;
     boolean ignoreBan = false;
     boolean checkOtherPool = false;
+    boolean nobodyLeft = false;
     
-    
-    while (num < 5) {
+    while (num < 5 && nobodyLeft == false) {
       boolean added = false;
       
       User u = null;
@@ -128,7 +134,9 @@ public class PodBuilder{
         ignoreBan = false;
         checkOtherPool = true;
       }
+      else nobodyLeft = true;
     }
+  
   }
 
   
