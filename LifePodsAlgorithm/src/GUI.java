@@ -186,7 +186,7 @@ public class GUI implements ActionListener{
     
     if (s.equals("Create Pods")) {
       field2.setText("");
-      
+      message.setText("processing...");
       button2.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Create Pods");
       fd.setMode(FileDialog.SAVE);
@@ -194,7 +194,10 @@ public class GUI implements ActionListener{
       fd.setVisible(true);
       button2.setForeground(Color.decode("#148229"));
       
-      if (fd.getDirectory() == null) directoryChosen = false;
+      if (fd.getDirectory() == null) {
+        directoryChosen = false;
+        message.setText("");
+      }
       else {
         directoryChosen = true;
         directoryName = fd.getDirectory();
