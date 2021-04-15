@@ -26,6 +26,7 @@ public class ExcelReader {
   private ArrayList<User> users = new ArrayList<User>();
   private HashMap<Integer, String> map = new HashMap<>();
   private XSSFRow row;
+  private int testKey = 0;
   public String message = null;
   
   public ExcelReader(String fileName) {
@@ -44,6 +45,9 @@ public class ExcelReader {
       
       while (ri.hasNext()) {
         row = (XSSFRow)ri.next();
+        Cell testCell = row.getCell(testKey);
+        if (testCell.getNumericCellValue() <= 0) break;
+        
         
         User u = new User();
         users.add(u);
@@ -128,7 +132,10 @@ public class ExcelReader {
           String str = cell.toString();
           
           if (str.isEmpty()) map.put(key, "ignore");
-          else if (str.equals("User ID")) map.put(key, "id");
+          else if (str.equals("User ID")) {
+            map.put(key, "id");
+            testKey = key;
+          }
           else if (str.equals("Names")) map.put(key, "names");
           else if (str.equals("Post Grad Plans")) map.put(key, "plans");
           else if (str.equals("Willing to be pod leader?")) map.put(key, "willLead");
