@@ -25,13 +25,16 @@ public class CsvReader {
       while (scanner.hasNextLine()) {
           
         String row = scanner.nextLine();
+        if (row.matches(".*[0-9999].*") == false) break;
+        
         String[] splitRow = row.split(",");
-        User u = new User();
+        User u = new User(); 
         users.add(u);
         int[] friends = new int[2];
         int fIndex = 0;
         int[] enemies = new int[4];
         int eIndex = 0;
+        
         
         for (int key : map.keySet()) {
           String val = map.get(key);
