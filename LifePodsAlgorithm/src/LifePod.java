@@ -36,6 +36,10 @@ public class LifePod {
     this.members = members;
   }
   
+  public User removeMember(int index) {
+    return members.remove(index);
+  }
+  
   //leader
   public void addLeader(User user) {
     members.add(user);
