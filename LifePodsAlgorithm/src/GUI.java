@@ -156,7 +156,6 @@ public class GUI implements ActionListener{
       field2.setText("");
       button2.setEnabled(false);
       
-      
       button1.setForeground(Color.RED);
       FileDialog fd = new FileDialog(frame,"Select file");
       fd.setFilenameFilter(new FilenameFilter() {

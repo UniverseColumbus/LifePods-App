@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.Map.Entry;
 
 
 public class Main{
@@ -7,11 +6,11 @@ public class Main{
   public static GUI gui;
 
   public static void main(String[] args) {
-    Main m = new Main();
-    gui = new GUI(m); 
-    gui.launch();
+//    Main m = new Main();
+//    gui = new GUI(m); 
+//    gui.launch();
     
-//    runWithoutGUI();
+    runWithoutGUI();
   }
   
   public void finish(String readType, String writeType) {
@@ -35,13 +34,13 @@ public class Main{
       gui.timer.start();
     }
     else if (users != null){
-      PodBuilder gb = new PodBuilder(users);
-      HashMap<Integer, LifePod> pods = gb.buildPods();
-      ArrayList<LifePod> podList = new ArrayList<>();
+      PodBuilder pb = new PodBuilder(users);
+      ArrayList<LifePod> podList = pb.buildPods();
+      int counter = 1;
       
-      for (Entry<Integer, LifePod> p : pods.entrySet()) {
-        System.out.println(p.getKey() + " " + p.getValue().toString());
-        podList.add(p.getValue());
+      for (LifePod p : podList) {
+        System.out.println(counter + " " + p.toString());
+        counter++;
       }
       
       String[] directories = gui.field2.getText().split("/");
@@ -69,7 +68,7 @@ public class Main{
   public static void runWithoutGUI() {
     
     ArrayList<User> users;
-    String fileName = "src/source/test9.xlsx";
+    String fileName = "src/source/users.xlsx";
     
 //    CsvReader cr = new CsvReader(fileName);
 //    users = cr.readFile();
@@ -83,13 +82,13 @@ public class Main{
 //  }
 //  System.out.println("***********************************");
     
-    PodBuilder gb = new PodBuilder(users);
-    HashMap<Integer, LifePod> pods = gb.buildPods();
-    ArrayList<LifePod> podList = new ArrayList<>();
+    PodBuilder pb = new PodBuilder(users);
+    ArrayList<LifePod> podList = pb.buildPods();
+    int counter = 1;
     
-    for (Entry<Integer, LifePod> p : pods.entrySet()) {
-      System.out.println(p.getKey() + " " + p.getValue().toString());
-      podList.add(p.getValue());
+    for (LifePod p : podList) {
+      System.out.println(counter + " " + p.toString());
+      counter++;
     }
     
     String directoryName = "/Users/michaelorr/Desktop";

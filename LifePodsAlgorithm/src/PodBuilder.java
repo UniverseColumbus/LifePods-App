@@ -8,14 +8,20 @@ import java.util.Map.Entry;
 public class PodBuilder{
   private ArrayList<User> users;
   private static int POD_SIZE = 5;
-  int maxPods;
-  ArrayList<LifePod> pods = new ArrayList<>();
+  int maxPods; 
+  ArrayList<LifePod> workPods = new ArrayList<>();
+  ArrayList<LifePod> gradPods = new ArrayList<>();
+  ArrayList<LifePod> podList = new ArrayList<>();
+  boolean haveExtraPod = true;
+  LifePod extraPod;
+  String extraType;
+  int extraUsers = 0;
+  
   HashMap<Integer, User> usersMapped = new HashMap<>();
   ArrayList<User> mappedUsers = new ArrayList<>();
   
   private HashMap<Integer, LinkedList<User>> gradPool = new HashMap<>();
   private HashMap<Integer, LinkedList<User>> workPool = new HashMap<>();
-  public HashMap<Integer, LifePod> podPool = new HashMap<>();
  
   
   public PodBuilder(ArrayList<User> users) {
@@ -26,54 +32,126 @@ public class PodBuilder{
     
     maxPods = 0;
     int totalUsers = users.size();
+    extraUsers = totalUsers % 5;
+    if (extraUsers > 3 || extraUsers == 0) haveExtraPod = false; 
+    
     while (totalUsers > 0) {
       totalUsers -= POD_SIZE;
       maxPods++;
     }
     
-    for (int i=1; i<=maxPods; i++) {
-      podPool.put(i, new LifePod());
-    }
   }
   
   
-  public HashMap<Integer, LifePod> buildPods() {
+  public ArrayList<LifePod> buildPods() {
     int gradSize = 0;
-    for (Entry<Integer, LinkedList<User>> e : gradPool.entrySet()) {
-      gradSize += e.getValue().size();
-    }
+    for (Entry<Integer, LinkedList<User>> e : gradPool.entrySet()) gradSize += e.getValue().size();
     
     int workSize = 0;
-    for (Entry<Integer, LinkedList<User>> e : workPool.entrySet()) {
-      workSize += e.getValue().size();
-    }
+    for (Entry<Integer, LinkedList<User>> e : workPool.entrySet()) workSize += e.getValue().size();
     
     int totalSize = gradSize + workSize;
-    int key = 1;
+    int num = ThreadLocalRandom.current().nextInt(0, 2);
     
     
-    while (gradSize > 0 && totalSize > 0) {
-      podPool.get(key).setType("grad");
-      addMembers(podPool.get(key), gradPool);
-      key++;
+    while (totalSize > 0) {
+      LifePod pod = new LifePod();
       
-      gradSize -= POD_SIZE;
-      totalSize -= POD_SIZE;
-    }
-    while (workSize > 0 && totalSize > 0) {
-      podPool.get(key).setType("work");
-      addMembers(podPool.get(key), workPool);
-      key++;
+      switch(num){
+        case 0: 
+          if (gradSize > 0) {
+            pod.setType("grad");
+            gradPods.add(pod);
+            addMembers(pod, gradPool);
+            
+            gradSize -= POD_SIZE;
+            totalSize -= POD_SIZE;
+            if (haveExtraPod && totalSize <= 0) extraPod = gradPods.remove(gradPods.size() -1);
+            num = 1;
+          }
+          else num = 1;
+          break;
+          
+        case 1:
+          if (workSize > 0) {
+            pod.setType("work");
+            workPods.add(pod);
+            addMembers(pod, workPool);
+            
+            workSize -= POD_SIZE;
+            totalSize -= POD_SIZE;
+            if (haveExtraPod && totalSize <= 0) extraPod = workPods.remove(workPods.size() -1);
+            num = 0;
+          }
+          else num = 0;
+          break;
+      }
       
-      workSize -= POD_SIZE;
-      totalSize -= POD_SIZE;
+//      podList.add(pod);
     }
     
+    podList.addAll(gradPods);
+    podList.addAll(workPods);
     
-    return podPool;
+    if (haveExtraPod) {
+      redistribute(extraPod);
+      podList = new ArrayList<LifePod>();
+      podList.addAll(gradPods);
+      podList.addAll(workPods);
+    }
+    
+    return podList;
   }
   
+  
+  private void redistribute(LifePod extraPod) {
+    int gradCounter = 0;
+    int workCounter = 0;
+    
+    while (extraUsers > 0) {
+      User u = extraPod.removeMember(0);
+      String userPlans = u.getPlans();
+      boolean added = false;
+      boolean switched = false;
+      int choice = (userPlans.equals("undecided")) ? choice = ThreadLocalRandom.current().nextInt(0, 2) : 999;
+      
+      while (added == false) {
+        
+        if (userPlans.equals("grad school") || choice == 0) {
+          if (gradCounter < gradPods.size()) {
+            gradPods.get(gradCounter).addUser(u);
+            added = true;
+            gradCounter++;
+          }
+          else if (userPlans.equals("undecided") && switched == false){
+            choice = 1;
+            switched = true;
+          }
+          else if (gradPods.size() > 0) gradCounter = 0;
+          else userPlans = "work";
+        }
+        
+        else if (userPlans.equals("work") || userPlans.equals("looking for work") || choice == 1) {
+          if (workCounter < workPods.size()) {
+            workPods.get(workCounter).addUser(u);
+            added = true;
+            workCounter++; 
+          }
+          else if (userPlans.equals("undecided") && switched == false) {
+            choice = 0;
+            switched = true;
+          }
+          else if (workPods.size() > 0) workCounter = 0;
+          else userPlans = "grad school";
+        }
+        
+      }
+      
+      extraUsers--; 
+    }
+  }
 
+  
   private void addMembers(LifePod pod, HashMap<Integer, LinkedList<User>> pool) {
     int num = 0;
     boolean ignoreBan = false;
@@ -117,9 +195,7 @@ public class PodBuilder{
         if (friend != null) {
           mappedUsers.add(friend);
           pod.addUser(friend);
-//          System.out.println("added id: " + friend.getId());
           removeFromPool(friend, pool);
-//          System.out.println();
           num++;
         }
       }
@@ -138,6 +214,16 @@ public class PodBuilder{
   
   }
 
+  
+  public ArrayList<LifePod> getWorkPods(){
+    return workPods;
+  }
+  
+  public ArrayList<LifePod> getGradPods(){
+    return gradPods;
+  }
+  
+  
   
   /**
    * Asks if the user in question can be added. 
@@ -173,7 +259,6 @@ public class PodBuilder{
     
     int random = ThreadLocalRandom.current().nextInt(0, 2);
     int friendId = u.getFriends()[random];
-//    System.out.println("friendId is: " + friendId);
     int totalFriends = u.getFriends().length;
     User friend = getUser(friendId);
     
@@ -181,7 +266,6 @@ public class PodBuilder{
       
       if (friend == null || valid(friend) == false || checkBan(pod, friend) == true || isMutual(u, friend) == false) {
         friendId = u.getFriends()[random^1];
-//        System.out.println("id switched to: " + friendId + "\n");
         friend = getUser(friendId);
         i++;
       }
@@ -228,7 +312,6 @@ public class PodBuilder{
       index = i;
       
       if (poolUser.getId() == id) {
-//        System.out.println("removed id: " + pool.get(pk).get(index).getId());
         pool.get(pk).remove(index);
         break;
       }
