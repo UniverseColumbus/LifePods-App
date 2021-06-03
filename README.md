@@ -4,10 +4,10 @@ It's a java program that sorts recently graduated university/college alumni into
 
 The runnable jar file for the sorting program requires the following external jars from: https://poi.apache.org/download.html
 
-xmlbeans-4.0.0.jar 
-poi-ooxml-lite-5.0.0.jar 
-poi-ooxml-5.0.0.jar 
-poi-5.0.0.jar
-commons-compress-1.20.jar 
-commons-collections4-4.4.jar
+ --> xmlbeans-4.0.0.jar 
+ --> poi-ooxml-lite-5.0.0.jar 
+ --> poi-ooxml-5.0.0.jar 
+ --> poi-5.0.0.jar
+ --> commons-compress-1.20.jar 
+ --> commons-collections4-4.4.jar
 
