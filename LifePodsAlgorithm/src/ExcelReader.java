@@ -46,7 +46,7 @@ public class ExcelReader {
       while (ri.hasNext()) {
         row = (XSSFRow)ri.next();
         Cell testCell = row.getCell(testKey);
-        if (testCell.getNumericCellValue() <= 0) break;
+        if (testCell == null || testCell.getNumericCellValue() <= 0) break;
         
         
         User u = new User();
