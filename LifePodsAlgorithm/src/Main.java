@@ -68,13 +68,13 @@ public class Main{
   public static void runWithoutGUI() {
     
     ArrayList<User> users;
-    String fileName = "src/source/users.xlsx";
+    String fileName = "src/source/Rochester.csv";
     
-//    CsvReader cr = new CsvReader(fileName);
-//    users = cr.readFile();
+    CsvReader cr = new CsvReader(fileName);
+    users = cr.readFile();
     
-    ExcelReader er = new ExcelReader(fileName);
-    users = er.readFile();  
+//    ExcelReader er = new ExcelReader(fileName);
+//    users = er.readFile();  
     
 //  prints all the users
 //  for (User u : users) {
