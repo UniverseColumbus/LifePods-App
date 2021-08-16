@@ -32,7 +32,7 @@ public class GUI implements ActionListener{
   public void launch() {
     
     frame = new JFrame("LifePods Creator");
-    frame.setMinimumSize(new Dimension(300, 260));
+    frame.setMinimumSize(new Dimension(500, 260));
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panel = frame.getContentPane();
     panel.setLayout(new GridBagLayout());
@@ -228,7 +228,7 @@ public class GUI implements ActionListener{
   
   
   private void createTimer() {
-    timer = new Timer(3000, new ActionListener() {
+    timer = new Timer(14000, new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         message.setText("");
       }

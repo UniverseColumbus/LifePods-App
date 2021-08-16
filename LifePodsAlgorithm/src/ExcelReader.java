@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-//jar files from: https://poi.apache.org/download.html
+//Apache POI files from: https://poi.apache.org/download.html
 //xmlbeans-4.0.0.jar 
 //poi-ooxml-lite-5.0.0.jar 
 //poi-ooxml-5.0.0.jar 
@@ -18,9 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.commons.lang3.StringUtils;
+//Apache commons-lang3 file from: https://commons.apache.org/proper/commons-lang/download_lang.cgi
+import org.apache.commons.lang3.math.*;
 
 
-public class ExcelReader {
+public class ExcelReader{
   
   private String fileName = "";
   private ArrayList<User> users = new ArrayList<User>();
@@ -28,6 +31,7 @@ public class ExcelReader {
   private XSSFRow row;
   private int testKey = 0;
   public String message = null;
+  private int currentUser = 1;
   
   public ExcelReader(String fileName) {
     this.fileName = fileName;
@@ -47,7 +51,6 @@ public class ExcelReader {
         row = (XSSFRow)ri.next();
         Cell testCell = row.getCell(testKey);
         if (testCell == null || testCell.getNumericCellValue() <= 0) break;
-        
         
         User u = new User();
         users.add(u);
@@ -73,19 +76,42 @@ public class ExcelReader {
             else if (type == CellType.BOOLEAN) str = Boolean.toString(cell.getBooleanCellValue());
             else if (type == CellType.BLANK) str = cell + "";
           }
-          
              
-          if (val.equals("id")) u.setId((int)Integer.parseInt(str));
-          else if (val.equals("names")) u.setName(str);
-          else if (val.equals("plans")) u.setPlans(str);
-          else if (val.equals("willLead")) u.setWillLead(str);
+          if (val.equals("id")) {
+        	  if (!NumberUtils.isDigits(str)) {
+        		  throw new NumberFormatException("User " + currentUser + ": 'User ID' column is not a number");
+        	  }
+        	  u.setId((int)Integer.parseInt(str));
+        	  currentUser = (int)Integer.parseInt(str);
+          }
+          else if (val.equals("names")) {
+        	  u.setName(str);
+          }
+          else if (val.equals("plans")) {
+            if ( !(str.equals("work") || str.equals("looking for work") || str.equals("grad school") || str.equals("undecided")) ) {
+              throw new NoSuchFieldException("User " + currentUser + ": 'Post Grad Plans' column has incorrect value");
+            }
+            u.setPlans(str);
+          }
+          else if (val.equals("willLead")) {
+            if ( !(str.equals("yes") || str.equals("no") || str.equals("maybe")) ) {
+              throw new NoSuchFieldException("User " + currentUser + ": 'Willing to be pod leader?' column has incorrect value");
+            }
+            u.setWillLead(str);
+          }
           else if (val.equals("friends")) {
             if (str.isEmpty()) friends[fIndex] = -1;
+            else if (!NumberUtils.isDigits(str)) {
+            	throw new NumberFormatException("User " + currentUser + ": 'Preference' column is not a number");
+            }
             else friends[fIndex] = (int)Integer.parseInt(str);
             fIndex++;
           }
           else if (val.equals("enemies")) {
             if (str.isEmpty()) enemies[eIndex] = -1;
+            else if (!NumberUtils.isDigits(str)) {
+            	throw new NumberFormatException("User " + currentUser + ": 'Anti-Preference' column is not a number");
+            }
             else enemies[eIndex] = (int)Integer.parseInt(str);
             eIndex++;
           }
@@ -103,7 +129,11 @@ public class ExcelReader {
     }
     catch (NumberFormatException ex) {
       System.out.println(ex.toString());
-      message = "Error: Wrong Input Format.";
+      message = ex.getMessage();
+    }
+    catch (NoSuchFieldException ex) {
+      System.out.println(ex.toString());
+      message = ex.getMessage();
     }
     catch (Exception ex) {
       System.out.println(ex.toString());
